@@ -1,0 +1,70 @@
+{
+  "name": "ramolive2d",
+  "version": "1.0.0",
+  "description": "A charming desktop companion powered by Live2D technology",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "author": "Mirakelor",
+  "license": "ISC",
+  "build": {
+    "appId": "com.sonder.ramolive2d",
+    "productName": "RamoLive2D",
+    "copyright": "Copyright © 2025",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/{*/src,*/test,*/tests,*/docs,*.map}",
+      "!*.log",
+      "!*.md"
+    ],
+    "extraResources": [
+      {
+        "from": "models",
+        "to": "models",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "lib",
+        "to": "lib",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": true,
+      "createDesktopShortcut": true,
+      "menuCategory": true
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "icon.png",
+      "category": "public.app-category.entertainment"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "icon": "icon.png",
+      "category": "Utility"
+    }
+  },
+  "devDependencies": {
+    "electron": "^37.2.4",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "pixi.js": "^7.4.0",
+    "@pixi/utils": "^7.4.0",
+    "pixi-live2d-display": "^0.4.0"
+  }
+}
