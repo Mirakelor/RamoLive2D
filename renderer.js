@@ -18,15 +18,19 @@ function createExitButton() {
   });
 }
 
+const resolution = window.devicePixelRatio || 1;
+
 const app = new Application({
-  width: window.innerWidth,
-  height: window.innerHeight,
+  width: Math.floor(window.innerWidth * resolution),
+  height: Math.floor(window.innerHeight * resolution),
   autoStart: true,
   transparent: true,
   antialias: true,
-  resolution: 1,
+  resolution: resolution,  // 使用设备像素比
   backgroundAlpha: 0
 });
+app.view.style.width = `${window.innerWidth}px`;
+app.view.style.height = `${window.innerHeight}px`;
 document.getElementById('live2d-container').appendChild(app.view);
 app.renderer.backgroundColor = 0x000000;
 app.renderer.backgroundAlpha = 0;
@@ -55,21 +59,24 @@ async function loadModel(modelPath) {
     document.addEventListener('contextmenu', e => e.preventDefault());
     const model = await Live2DModel.from(modelPath);
     app.stage.addChild(model);
+
     const calculateScale = () => {
       const baseScale = 0.4;
-      const scaleX = window.innerWidth / model.width;
-      const scaleY = window.innerHeight / model.height;
+      const scaleX = (app.screen.width) / model.width;
+      const scaleY = (app.screen.height) / model.height;
       return Math.min(scaleX, scaleY, baseScale);
     };
+    
     const initialScale = calculateScale();
     model.scale.set(initialScale);
-    model.x = window.innerWidth / 2;
-    model.y = window.innerHeight / 2;
+    model.x = app.screen.width / 2;
+    model.y = app.screen.height / 2;
     model.anchor.set(0.5, 0.5);
+    
     const handleResize = debounce(() => {
-      app.renderer.resize(window.innerWidth, window.innerHeight);
-      model.x = window.innerWidth / 2;
-      model.y = window.innerHeight / 2;
+      app.renderer.resize(app.screen.width, app.screen.height);
+      model.x = app.screen.width / 2;
+      model.y = app.screen.height / 2;
     }, 250);
     window.addEventListener('resize', handleResize);
     let isDragging = false;

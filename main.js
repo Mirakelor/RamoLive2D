@@ -119,7 +119,8 @@ const createWindow = () => {
       nodeIntegration: true,
       contextIsolation: false,
       webSecurity: false,
-      backgroundThrottling: false
+      backgroundThrottling: false,
+      enableHighDpiSupport: true
     }
   });
   win.removeMenu();
