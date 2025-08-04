@@ -1,6 +1,6 @@
 {
   "name": "ramolive2d",
-  "version": "1.0.0",
+  "version": "1.5.0",
   "description": "A charming desktop companion powered by Live2D technology",
   "main": "main.js",
   "scripts": {
